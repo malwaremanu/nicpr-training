@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Countdown | ICMR-NICPR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* A simple font import for a cleaner look */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="w-full max-w-4xl mx-auto text-center">
+
+        <header class="mb-8">
+            <h2 class="text-xl md:text-2xl font-bold text-slate-300">ICMR - National Institute of Cancer Prevention and Research</h2>
+            <h1 class="text-4xl md:text-6xl font-black uppercase tracking-wide mt-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">Winter Training & Dissertation Program</h1>
+        </header>
+
+        <main>
+            <p class="text-2xl text-orange-400 mb-6">Registrations are opening soon!</p>
+            
+            <div id="countdown-timer" class="flex justify-center gap-4 md:gap-8">
+                <div class="text-center bg-slate-800 p-4 md:p-6 rounded-lg w-24 md:w-32">
+                    <span id="days" class="text-5xl md:text-7xl font-bold">00</span>
+                    <div class="text-sm uppercase text-slate-400 mt-1">Days</div>
+                </div>
+                <div class="text-center bg-slate-800 p-4 md:p-6 rounded-lg w-24 md:w-32">
+                    <span id="hours" class="text-5xl md:text-7xl font-bold">00</span>
+                    <div class="text-sm uppercase text-slate-400 mt-1">Hours</div>
+                </div>
+                <div class="text-center bg-slate-800 p-4 md:p-6 rounded-lg w-24 md:w-32">
+                    <span id="minutes" class="text-5xl md:text-7xl font-bold">00</span>
+                    <div class="text-sm uppercase text-slate-400 mt-1">Minutes</div>
+                </div>
+                <div class="text-center bg-slate-800 p-4 md:p-6 rounded-lg w-24 md:w-32">
+                    <span id="seconds" class="text-5xl md:text-7xl font-bold">00</span>
+                    <div class="text-sm uppercase text-slate-400 mt-1">Seconds</div>
+                </div>
+            </div>
+            
+            <div id="expired-message" class="hidden text-center my-8">
+                <h3 class="text-4xl font-bold text-green-400">Registrations are now open!</h3>
+            </div>
+        </main>
+        
+        <footer class="mt-12">
+            <a href="https://training.nicpr.org" target="_blank" class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full transition-transform duration-300 hover:scale-105">
+                Visit Training Portal
+            </a>
+        </footer>
+
+    </div>
+
+    <script>
+        // --- COUNTDOWN SCRIPT ---
+
+        // !! IMPORTANT: Set your target date and time here !!
+        // Format: "Month Day, Year HH:MM:SS" (e.g., "Oct 15, 2025 10:00:00")
+        const countdownDate = new Date("Oct 1, 2025 09:00:00").getTime();
+
+        // Get elements from the DOM
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+        const timerEl = document.getElementById('countdown-timer');
+        const expiredEl = document.getElementById('expired-message');
+
+        // Update the countdown every 1 second
+        const countdownInterval = setInterval(() => {
+            // Get today's date and time
+            const now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            const distance = countdownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Add leading zeros if number is less than 10
+            daysEl.innerHTML = days < 10 ? '0' + days : days;
+            hoursEl.innerHTML = hours < 10 ? '0' + hours : hours;
+            minutesEl.innerHTML = minutes < 10 ? '0' + minutes : minutes;
+            secondsEl.innerHTML = seconds < 10 ? '0' + seconds : seconds;
+
+            // If the countdown is finished, show message and hide timer
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                timerEl.classList.add('hidden');
+                expiredEl.classList.remove('hidden');
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
